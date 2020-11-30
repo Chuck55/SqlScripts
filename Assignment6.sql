@@ -138,7 +138,7 @@ create table MenuBase.dishupgrade (
 	DishTitle text,
 	UpgradeName text,
 	constraint pk_dishupgrade_name primary key (CategoryName, R_Name, UpgradeName, DishTitle),
-	constraint fk_dishupgrade_category_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
+	constraint fk_dishupgrade_category_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_Name, CategoryName, Title),
 
 	constraint fk_dishupgrade_upgrade_key1 foreign key (R_Name, UpgradeName) references MenuBase.upgrade(R_NameUpgrade, Name)
 );
