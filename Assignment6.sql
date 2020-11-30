@@ -71,46 +71,45 @@ create table MenuBase.Menu (
 );
 
 create table MenuBase.category (
-	R_NameCategory text,
+	R_Name text,
 	Name text not null,
-	Descriptions text null,
-	constraint pk_category_name primary key (Name, R_NameCategory),
-	constraint fk_category_key foreign key (R_NameCategory) references MenuBase.Menu(Restaurant_name)
+	Description text null,
+	constraint pk_category_name primary key (Name, R_Name),
+	constraint fk_category_key foreign key (R_Name) references MenuBase.Menu(Restaurant_name)
 );
 
 create table MenuBase.upgrade (
-	R_NameUpgrade text,
-	Names text not null,
+	R_Name text,
+	Name text not null,
 	cost int not null,
-	constraint pk_upgrade_name primary key (Names,R_NameUpgrade),
-	constraint fk_upgrade_key foreign key (R_NameUpgrade) references MenuBase.Menu(Restaurant_name)
+	constraint pk_upgrade_name primary key (Name,R_Name),
+	constraint fk_upgrade_key foreign key (R_Name) references MenuBase.Menu(Restaurant_name)
 );
 
 
 create table MenuBase.dish (
-	R_NameDish text,
+	R_Name text,
 	CategoryName text,
 	Title text,
-	descriptions text null,
+	description text null,
 	options text null,
-	constraint ck_dish_options check (options in ('red','yellow','blue')),
-	constraint pk_dish_name primary key (CategoryName, Title, R_NameDish),
-	constraint fk_dish_key foreign key (R_NameDish, CategoryName) references MenuBase.category(R_NameCategory, Name)
+	constraint pk_dish_name primary key (CategoryName, Title, R_Name),
+	constraint fk_dish_key foreign key (R_Name, CategoryName) references MenuBase.category(R_Name, Name)
 );
 
 
 create table MenuBase.dishprice (
-	R_NameDishPrice text,
+	R_Name text,
 	CategoryName text,
 	DishTitle text,
 	Size text,
 	cost int not null,
-	constraint pk_dishprice_name primary key (CategoryName, DishTitle, R_NameDishPrice, Size),
-	constraint fk_dish_key1 foreign key (R_NameDishPrice, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName,Title)
+	constraint pk_dishprice_name primary key (CategoryName, DishTitle, R_Name, Size),
+	constraint fk_dish_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_Name, CategoryName,Title)
 );
 
 create table MenuBase.special (
-	R_NameSpecial text,
+	R_Name text,
 	CategoryName text,
 	DishTitle text,
 	WeekDay text not null,
@@ -118,65 +117,63 @@ create table MenuBase.special (
 	endTime text not null,
 	constraint ck_special_WeekDay check (WeekDay in ('Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
 
-	constraint pk_special_name primary key (CategoryName, DishTitle, R_NameSpecial),
-	constraint fk_special_dish_key1 foreign key (R_NameSpecial, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
-
-	constraint fk_special_category_key1 foreign key (R_NameSpecial, CategoryName) references MenuBase.category(R_NameCategory, Name)
+	constraint pk_special_name primary key (CategoryName, DishTitle, R_Name),
+	constraint fk_special_dish_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
 );
 
 create table MenuBase.categoryupgrade (
-	R_NameCategoryUpgrade text,
+	R_Name text,
 	CategoryName text,
 	UpgradeName text,
-	constraint pk_categoryupgrade_name primary key (CategoryName, R_NameCategoryUpgrade, UpgradeName),
-	constraint fk_categoryupgrade_category_key1 foreign key (R_NameCategoryUpgrade, CategoryName) references MenuBase.category(R_NameCategory, Name),
-	constraint fk_categoryupgrade_upgrade_key1 foreign key (R_NameCategoryUpgrade, UpgradeName) references MenuBase.upgrade(R_NameUpgrade, Names)
+	constraint pk_categoryupgrade_name primary key (CategoryName, R_Name, UpgradeName),
+	constraint fk_categoryupgrade_category_key1 foreign key (R_Name, CategoryName) references MenuBase.category(R_Name, Name),
+	constraint fk_categoryupgrade_upgrade_key1 foreign key (R_Name, UpgradeName) references MenuBase.upgrade(R_Name, Name)
 );
 
 
 
 create table MenuBase.dishupgrade (
-	R_NameDishUpgrade text,
+	R_Name text,
 	CategoryName text,
 	DishTitle text,
 	UpgradeName text,
-	constraint pk_dishupgrade_name primary key (CategoryName, R_NameDishUpgrade, UpgradeName, DishTitle),
-	constraint fk_dishupgrade_category_key1 foreign key (R_NameDishUpgrade, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
+	constraint pk_dishupgrade_name primary key (CategoryName, R_Name, UpgradeName, DishTitle),
+	constraint fk_dishupgrade_category_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
 
-	constraint fk_dishupgrade_upgrade_key1 foreign key (R_NameDishUpgrade, UpgradeName) references MenuBase.upgrade(R_NameUpgrade, Names)
+	constraint fk_dishupgrade_upgrade_key1 foreign key (R_Name, UpgradeName) references MenuBase.upgrade(R_NameUpgrade, Name)
 );
 
 insert into MenuBase.Menu (Restaurant_name, URL, description) values ('Sallys', 'http://sallyssaloon.net/menu/', 'Thanks for dining with us! 700 Wash Ave');
-insert into MenuBase.category (R_NameCategory, Name, Descriptions) values 
+insert into MenuBase.category (R_Name, Name, Description) values 
 ('Sallys', 'Appetizers', NULL),
 ('Sallys', 'Sandwiches & Wraps', 'Served with kettle chips (unless otherwise noted)'),
 ('Sallys', 'Saloon Daily Specials', 'Subject to Change on Event Days');
-insert into MenuBase.upgrade (R_NameUpgrade, Names, cost) values 
+insert into MenuBase.upgrade (R_Name, Name, cost) values 
 ('Sallys', 'Fries', 2),
 ('Sallys', 'Tater Tots', 2),
 ('Sallys', 'House Salad', 3),
 ('Sallys', 'Cup of Soup', 3),
 ('Sallys', 'Chicken', 1),
 ('Sallys', 'Taco beef', 1);
-insert into MenuBase.dish (R_NameDish, CategoryName, Title, descriptions, options) values 
+insert into MenuBase.dish (R_Name, CategoryName, Title, description, options) values 
 ('Sallys', 'Appetizers', 'Sallys Wings', 'oven baked...bleu cheese.', NULL),
 ('Sallys', 'Appetizers', 'Nachos', 'cheese...friendly.', NULL),
 ('Sallys', 'Sandwiches & Wraps', 'Smoked Pork Sandwich', 'smoked...bun.',NULL),
 ('Sallys', 'Saloon Daily Specials', 'Street Taco Tuesday', NULL, NULL);
 
-insert into MenuBase.dishprice (R_NameDishPrice, CategoryName, DishTitle, Size, cost) values 
+insert into MenuBase.dishprice (R_Name, CategoryName, DishTitle, Size, cost) values 
 ('Sallys', 'Appetizers', 'Sallys Wings', '6 pc', 7),
 ('Sallys', 'Appetizers', 'Sallys Wings', '12 pc', 12),
 ('Sallys', 'Appetizers', 'Nachos', '', 12),
 ('Sallys', 'Sandwiches & Wraps', 'Smoked Pork Sandwich', '', 10),
 ('Sallys', 'Saloon Daily Specials', 'Street Taco Tuesday', '', 5);
 
-insert into MenuBase.special (R_NameSpecial, CategoryName, DishTitle, WeekDay, startTime, endTime) values ('Sallys', 'Saloon Daily Specials', 'Street Taco Tuesday', 'Tuesday', '5pm', 'Midnight');
+insert into MenuBase.special (R_Name, CategoryName, DishTitle, WeekDay, startTime, endTime) values ('Sallys', 'Saloon Daily Specials', 'Street Taco Tuesday', 'Tuesday', '5pm', 'Midnight');
 
-insert into MenuBase.categoryupgrade (R_NameCategoryUpgrade, CategoryName, UpgradeName) values ('Sallys', 'Sandwiches & Wraps', 'Tater Tots'),
+insert into MenuBase.categoryupgrade (R_Name, CategoryName, UpgradeName) values ('Sallys', 'Sandwiches & Wraps', 'Tater Tots'),
 ('Sallys', 'Sandwiches & Wraps', 'House Salad');
 
-insert into MenuBase.dishupgrade (R_NameDishUpgrade, CategoryName, DishTitle, UpgradeName) values 
+insert into MenuBase.dishupgrade (R_Name, CategoryName, DishTitle, UpgradeName) values 
 ('Sallys', 'Appetizers', 'Nachos', 'Chicken'),
 ('Sallys', 'Appetizers', 'Nachos', 'Taco beef');
 
