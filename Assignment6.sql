@@ -140,7 +140,7 @@ create table MenuBase.dishupgrade (
 	constraint pk_dishupgrade_name primary key (CategoryName, R_Name, UpgradeName, DishTitle),
 	constraint fk_dishupgrade_category_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_Name, CategoryName, Title),
 
-	constraint fk_dishupgrade_upgrade_key1 foreign key (R_Name, UpgradeName) references MenuBase.upgrade(R_NameUpgrade, Name)
+	constraint fk_dishupgrade_upgrade_key1 foreign key (R_Name, UpgradeName) references MenuBase.upgrade(R_Name, Name)
 );
 
 insert into MenuBase.Menu (Restaurant_name, URL, description) values ('Sallys', 'http://sallyssaloon.net/menu/', 'Thanks for dining with us! 700 Wash Ave');
