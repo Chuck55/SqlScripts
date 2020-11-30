@@ -118,7 +118,7 @@ create table MenuBase.special (
 	constraint ck_special_WeekDay check (WeekDay in ('Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
 
 	constraint pk_special_name primary key (CategoryName, DishTitle, R_Name),
-	constraint fk_special_dish_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_NameDish, CategoryName, Title),
+	constraint fk_special_dish_key1 foreign key (R_Name, CategoryName, DishTitle) references MenuBase.dish(R_Name, CategoryName, Title)
 );
 
 create table MenuBase.categoryupgrade (
