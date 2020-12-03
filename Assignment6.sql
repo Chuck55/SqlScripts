@@ -41,7 +41,7 @@ create table bowling.Frame (
 	Roll3Score int null,
 	isSplit bool,
 	constraint rolls check ((FrameNum != 10 AND Roll3Score = null) or (FrameNum =10 AND Roll3Score != null)),
-	constraint roll2s check ((FrameNum != 10 AND Roll1Score = 10 and Roll2score = null) or (FrameNum != 10 AND Roll1Score != 10 and Roll2score != null)),
+	constraint roll2s check ((FrameNum != 10 AND Roll1Score = 10 and Roll2score = null) or (FrameNum = 10 AND Roll1Score = 10 and Roll2score != null) or  (FrameNum != 10 AND Roll1Score != 10 and Roll2score != null)),
 	constraint pk_frame_key primary key (LineAlleyPhoneNum, lineLanetime, linegamelanenum, lineplayernum, FrameNum),
 	constraint fk_frame_key1 foreign key (LineAlleyPhoneNum, lineLanetime, linegamelanenum, lineplayernum) references bowling.Line(GameAlleyPhoneNum, gametime, gamelanenum, playernum)
 );
