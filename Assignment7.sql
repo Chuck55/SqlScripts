@@ -26,10 +26,14 @@ a.country <> 'ALASKA';
 DROP VIEW lonelyroute;
 
 Create view lonelyroute as
-select a.source_airport, a.destination_airport 
+select b.source_airport, b.destination_airport 
 from route a 
-	left join route b 
-		on a.source_airport_id = b.destination_airport_id and b.source_airport_id = a.destination_airport_id and a.source_airport_id <> a.destination_airport_id where b.airline = null;
+	right join route b on a.source_airport = b.destination_airport and b.source_airport = a.destination_airport
+		inner join airport c 
+			on c.id = b.source_airport_id
+			inner join airport d 
+				on d.id = b.destination_airport_id
+where a.airline is null
 
 select destination_airport, count(destination_airport) AS howmany
 from lonelyroute 
