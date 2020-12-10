@@ -34,7 +34,7 @@ from route a
 				on d.id = b.destination_airport_id
 where a.airline is null;
 
-select destination_airport, count(destination_airport) AS howmany
+select lonelyroute.destination_airport, count(lonelyroute.destination_airport) AS howmany
 from lonelyroute 
-group by destination_airport 
+group by lonelyroute.destination_airport 
 order by howmany desc;
