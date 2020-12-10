@@ -23,9 +23,8 @@ select distinct a.name from airline a inner join route b on a.id = b.airline_id 
 airport c on b.source_airport_id = c.id where c.city = 'Minneapolis' and c.country = 'United States' and 
 a.country <> 'ALASKA';
 
-DROP VIEW lonelyroute;
 
-Create view lonelyroute as
+Create or replace view lonelyroute as
 select b.source_airport, b.destination_airport 
 from route a 
 	right join route b on a.source_airport = b.destination_airport and b.source_airport = a.destination_airport
@@ -33,7 +32,7 @@ from route a
 			on c.id = b.source_airport_id
 			inner join airport d 
 				on d.id = b.destination_airport_id
-where a.airline is null
+where a.airline is null;
 
 select destination_airport, count(destination_airport) AS howmany
 from lonelyroute 
