@@ -8,7 +8,7 @@ from route
 			inner join airline c
 				on route.airline_id = c.id
 where a.altitude > 10000 and b.altitude > 10000
-group by route.airline;
+group by c.name;
 --2.
 select distinct e.city, e.country, e.name 
 from route A
