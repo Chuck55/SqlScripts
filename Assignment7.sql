@@ -1,14 +1,16 @@
 -- 1.
-select route.airline 
+select c.name 
 from route 
 	left join airport a 
 		on route.source_airport_id = a.id 
 		left join airport b
 			on route.destination_airport_id = b.id
+			inner join airline c
+				on route.airline_id = c.id
 where a.altitude > 10000 and b.altitude > 10000
 group by route.airline;
 --2.
-select distinct b.source_airport_id, e.city, e.country, e.name 
+select distinct e.city, e.country, e.name 
 from route A
 	inner join route b 
 		on a.destination_airport_id = b.source_airport_id 
