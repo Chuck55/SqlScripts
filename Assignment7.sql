@@ -1,3 +1,4 @@
+-- 1.
 select route.airline 
 from route 
 	left join airport a 
@@ -6,7 +7,7 @@ from route
 			on route.destination_airport_id = b.id
 where a.altitude > 10000 and b.altitude > 10000
 group by route.airline;
-
+--2.
 select distinct b.source_airport_id, e.city, e.country, e.name 
 from route A
 	inner join route b 
@@ -23,7 +24,7 @@ select distinct a.name from airline a inner join route b on a.id = b.airline_id 
 airport c on b.source_airport_id = c.id where c.city = 'Minneapolis' and c.country = 'United States' and 
 a.country <> 'ALASKA';
 
-
+--3.
 Create or replace view lonelyroute as
 select b.source_airport, b.destination_airport 
 from route a 
@@ -33,7 +34,7 @@ from route a
 			inner join airport d 
 				on d.id = b.destination_airport_id
 where a.airline is null;
-
+--4. MED is the airport with 16 one way routes
 select lonelyroute.destination_airport, count(lonelyroute.destination_airport) AS howmany
 from lonelyroute 
 group by lonelyroute.destination_airport 
